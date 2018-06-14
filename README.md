@@ -5,7 +5,7 @@ Deployment steps:
 1. Install .NET Core 2.1
 2. Install MongoDB server
 3. Start mongoDB server by executing mongod.exe file
-3. Create admin user in DB using MongoDB client (mongo.exe)
+4. Create admin user in DB using MongoDB client (mongo.exe)
 
 use admin
 
@@ -23,7 +23,7 @@ db.createUser(
 
 )
 
-4. Create mongodb.cfg file in the root folder of mongoDB server with the following contents:
+5. Create mongodb.cfg file in the root folder of mongoDB server with the following contents:
 
 systemLog:
 
@@ -41,11 +41,11 @@ security:
 
   authorization: enabled  
 
-5. Restart mongoDB server by executing command:
+6. Restart mongoDB server by executing command:
 
 mongod.exe --config mongod.cfg
 
-6. Deploy .NET Core web application on IIS server and start IIS site
+7. Deploy .NET Core web application on IIS server and start IIS site
 
 *Note: to authenticate into monitoring settings use the following credentials:
 Username: admin
