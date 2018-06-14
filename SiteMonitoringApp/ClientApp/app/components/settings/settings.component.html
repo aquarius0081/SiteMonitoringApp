@@ -1,0 +1,71 @@
+<div class="container">
+    <h1>Monitoring Settings</h1>
+    <button class="btn btn-primary" (click)="goBack()">Back</button>
+    <button *ngIf="isAuthenticated" class="btn btn-primary" (click)="onLogOut()">Logout</button>
+    <div *ngIf="!isAuthenticated">
+        <form name="form" (ngSubmit)="f.form.valid && onLogIn()" #f="ngForm" novalidate>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="userModel.username" #username="ngModel" required />
+                <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" [(ngModel)]="userModel.password" #password="ngModel" required />
+                <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Login</button>
+                <div *ngIf="f.submitted && isAuthenticationFailed" class="help-block">Username/password is invalid</div>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="isAuthenticated">
+        <div>
+            <label for="timePeriod">Monitoring time period, seconds</label>
+            <input class="form-control" #timeperiod="ngModel" required min="1" max="2147483648" [(ngModel)]="timePeriod" name="timePeriod" />
+            <button class="btn btn-primary" (click)="updatePeriodSeconds(timeperiod)">Update</button>
+            <div *ngIf="!timeperiod.valid || timePeriod <=0" class="help-block">Value should be integer from 1 to 2147483648.</div>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>URL</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let site of sites; let i = index">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ site.url }}</td>
+                        <td>
+                            <button type="button" class="btn btn-info" (click)="onEdit(i)">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" (click)="onDelete(i)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary" (click)="onNewSite()">New site</button>
+            </div>
+        </div>
+        <br>
+        <div *ngIf="showNew">
+            <form (ngSubmit)="onSave()">
+                <div class="form-group row">
+                    <label for="url-input" class="col-2 col-form-label">URL</label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" [(ngModel)]="siteModel.url" name="url-input">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">{{submitType}}</button>
+                <button type="submit" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

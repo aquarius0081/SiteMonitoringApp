@@ -1,0 +1,10 @@
+<h1>Site Monitoring App</h1>
+<p><a class="btn btn-primary" (click)="goToSettings()">Monitoring Settings</a></p>
+<p>Seconds left to auto-refresh {{secondsLeft}}</p>
+<ul>
+    <li *ngFor="let site of sites">
+        <span style="background:lightgreen;" *ngIf="site.isAvailable">Available</span>
+        <span style="background:red;" *ngIf="!site.isAvailable">Unavailable</span>
+        <a href="{{site.url}}">{{site.url}}</a>
+    </li>
+</ul>
